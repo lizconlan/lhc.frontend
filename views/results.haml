@@ -1,5 +1,7 @@
-Found
-=@results["hits"]["total"]
-
-- @results["hits"]["hits"].each do |result|
-  =haml "_result".to_sym, :locals => {:result => result}
+- if @total > 0
+  Showing #{@start+1} to #{@total >= @start+10 ? @start+10 : @total} of #{@total} results
+  
+  - @results["hits"]["hits"].each do |result|
+    =haml "_result".to_sym, :locals => {:result => result}
+- else
+  No results found
