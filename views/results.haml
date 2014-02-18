@@ -1,0 +1,5 @@
+Found
+=@results["hits"]["total"]
+
+- @results["hits"]["hits"].each do |result|
+  =haml "_result".to_sym, :locals => {:result => result}
