@@ -14,7 +14,8 @@ module LHC
     end
     
     def search(query_string, index_string="_all", from=0)
-      res = RestClient.post "#{@url}/#{index_string}/_search?pretty=true", \
+      sort = "_score,date:desc"
+      res = RestClient.post "#{@url}/#{index_string}/_search?pretty=true&sort=#{sort}", \
       { \
         :query => { :query_string => { :query => "#{query_string}" }}, \
         :facets => {:members => {:terms => {:field => "members"} } }, \
