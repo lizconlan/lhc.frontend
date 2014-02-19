@@ -1,8 +1,26 @@
-%h2
-  %a{:href => result["fields"]["url"][0]}
-    = result["fields"]["title"][0]
-
-%div.hansard_reference= result["fields"]["hansard_ref"][0]
-
-- if result["highlight"]
-  %p= result["highlight"]["text"].join("... ")
+.result
+  %h2.title
+    %a{:href => result["fields"]["url"][0]}
+      = result["fields"]["title"][0]
+  
+  %span.breadcrumbs
+    - house = result["_index"].include?("commons") ? "Commons" : "Lords"
+    - parse_date = Date.parse(result["fields"]["date"][0])
+    %a{:href => hansard_part_link(house, parse_date)}
+      =result["_index"].gsub("_", " ").split(/(\W)/).map(&:capitalize).join
+      =parse_date.strftime("%e %b %Y")
+    
+    &rsaquo;
+    
+    %a{:href => hansard_component_link(result["fields"]["url"][0])}
+      =result["fields"]["hansard_component"][0]
+  
+  %span.citation
+    =result["fields"]["hansard_ref"][0]
+  
+  - if result["highlight"]
+    %span.text
+      =format_highlights(result["highlight"]["text"])
+  - if result["fields"]["members"]
+    %span.contributors
+      = prepare_contributors(result["fields"]["members"])

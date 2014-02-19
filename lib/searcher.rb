@@ -19,7 +19,7 @@ module LHC
       { \
         :query => { :query_string => { :query => "#{query_string}" }}, \
         :facets => {:members => {:terms => {:field => "members"} } }, \
-        :fields => ["url", "members", "title", "hansard_ref", "date", "chair", "number", "question_type"], \
+        :fields => ["url", "members", "title", "hansard_ref", "date", "chair", "number", "hansard_component", "question_type"], \
         :highlight => { :fields => { :text => { :fragment_size => 150, :number_of_fragments => 3 } } }, \
         :from => from
       }.to_json, :content_type => :json

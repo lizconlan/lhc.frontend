@@ -7,6 +7,13 @@ module LHC
     # start the server if ruby file executed directly
     run! if app_file == $0
     
+    helpers do
+      include Rack::Utils
+      alias_method :h, :escape_html
+      
+      require "./helpers/result_helpers"
+    end
+    
     before do
       @search = Searcher.new("http://localhost", "9200")
     end
