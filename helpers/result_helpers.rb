@@ -60,11 +60,11 @@ def generate_link(start_offset)
   start = params[:start].to_i + start_offset
   link_parts = []
   params.each do |name, value|
-    if name == "start"
-      link_parts << "start=#{start}"
-    else
+    unless name == "start"
       link_parts << "#{name}=#{value}"
     end
   end
+  link_parts << "start=#{start}" unless start < 1
+  
   "?#{link_parts.join("&")}"
 end
