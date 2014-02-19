@@ -47,3 +47,24 @@ def top_and_tail_str(highlight)
   return_text << ' ...' unless highlight[-1..-1] == '.' 
   return_text
 end
+
+def next_link
+  generate_link(10)
+end
+
+def prev_link
+  generate_link(-10)
+end
+
+def generate_link(start_offset)
+  start = params[:start].to_i + start_offset
+  link_parts = []
+  params.each do |name, value|
+    if name == "start"
+      link_parts << "start=#{start}"
+    else
+      link_parts << "#{name}=#{value}"
+    end
+  end
+  "?#{link_parts.join("&")}"
+end

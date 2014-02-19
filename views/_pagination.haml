@@ -1,0 +1,5 @@
+.controls
+  - if @start > 9
+    %a{:href => prev_link } &laquo; Prev
+  - if @start +10 < @total
+    %a{:href => next_link } Next &raquo;

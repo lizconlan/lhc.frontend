@@ -19,17 +19,13 @@ module LHC
     end
     
     get "/" do
-      haml(:index)
-    end
-    
-    get "/search" do
-      query = params[:q]
+      @query = params[:q]
       @start = params[:start].to_i
       
-      @results = @search.search(query, "commons_hansard", @start)
+      @results = @search.search(@query, "commons_hansard", @start)
       @total = @results["hits"]["total"]
       
-      haml :results
+      haml :index
     end
   end
 end

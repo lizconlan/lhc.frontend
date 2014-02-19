@@ -1,4 +1,5 @@
 body{width:40em;margin:4em auto;font-family:Helvetica,sans-serif}
+div.results{padding:0.9em 0}
 div.result{padding:0.9em 0 0.4em}
 div.result h2{font-size:1.2em;margin:0.2em 0}
 div.result span.breadcrumbs{display:block;color:green;padding-bottom:0.1em}

@@ -1,1 +1,17 @@
-hi!
+%form#search{:action=>'/', :method=>'get'}
+  %div{:data => {:role=>'fieldcontain'}}
+    %label{:for=>"search"} Search
+    %input{:name => 'q', :id => 'search', :type => 'search', :value => @query, :placeholder=>"Search"}
+    
+- if @query
+  %div.results
+    - if @total < 1
+      No results found
+    - else
+      Showing #{@start+1} to #{@total >= @start+10 ? @start+10 : @total} of #{@total} results
+      
+      - @results["hits"]["hits"].each do |result|
+        =haml "_result".to_sym, :locals => {:result => result}
+    - if @total > 10
+      =haml "_pagination".to_sym
+      
