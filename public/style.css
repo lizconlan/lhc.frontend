@@ -16,3 +16,6 @@ li.facet-inactive{border-left:4pt solid #fff;text-decoration:none;color:#000;pad
 li.facet-inactive a{color:#000;text-decoration:none}
 li.facet-inactive:hover{background-color:#eee;border-left:4pt solid #eee;}
 li.facet-active:hover{background-color:#eee;}
+.controls {padding-top: 0.7em}
+.controls a.prev {padding-left: 0.5em}
+.controls a.next {float:right; padding-right: 0.5em}
