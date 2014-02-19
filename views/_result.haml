@@ -17,10 +17,15 @@
   
   %span.citation
     =result["fields"]["hansard_ref"][0]
+    - if result["fields"]["number"]
+      - if result["_type"] == "question"
+        = " - Question: #{result["fields"]["number"][0]}"
+    - if result["fields"]["chair"]
+      = " - Chair: #{result["fields"]["chair"].join(" / ")}"
   
   - if result["highlight"]
     %span.text
       =format_highlights(result["highlight"]["text"])
-  - if result["fields"]["members"]
+  - if result["fields"]["members"] and result["_type"] != "division"
     %span.contributors
       = prepare_contributors(result["fields"]["members"])
