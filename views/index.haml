@@ -4,6 +4,17 @@
     %input{:name => 'q', :id => 'search', :type => 'search', :value => @query, :placeholder=>"Search"}
     
 - if @query
+  %ul#facets
+    - if params[:facet]
+      %li.facet-inactive
+        %a{:href => facet_link("")} All Hansard content
+    - component_facets = @results["facets"]["components"]["terms"]
+    - component_facets.each do |facet|
+      - if facet["term"][0..1] =~ /[A-Z]/
+        %li{:class => params[:facet] == "component:#{facet["term"]}" ? "facet-active" : "facet-inactive"}
+          %a{:href => facet_link("component:#{facet["term"]}")}
+            =facet["term"]
+  
   %div.results
     - if @total < 1
       No results found

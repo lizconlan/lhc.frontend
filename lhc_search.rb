@@ -21,8 +21,9 @@ module LHC
     get "/" do
       @query = params[:q]
       @start = params[:start].to_i
+      facet = params[:facet]
       
-      @results = @search.search(@query, "commons_hansard", @start)
+      @results = @search.search(@query, "commons_hansard", @start, facet)
       @total = @results["hits"]["total"]
       
       haml :index
