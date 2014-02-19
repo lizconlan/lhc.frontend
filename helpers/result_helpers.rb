@@ -35,7 +35,7 @@ def format_highlights(result_highlights_array)
   result_highlights_array.each do |highlight_string|
     return_text << top_and_tail_str(highlight_string)
   end
-  return_text
+  return_text.gsub("......", "...")
 end
 
 def top_and_tail_str(highlight)
