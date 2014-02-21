@@ -13,20 +13,18 @@ module LHC
       end
     end
     
-    def search(query_string, index_string="_all", from=0, filters=nil)
+    def search(query_string, index_string="_all", from=0, filters=[])
       sort = "_score,date:desc"
       filter = {:value => {}}
-      
-      if filters
-        filter = interpret_filter(filters)
-      end
+      filter = interpret_filter(filters)
       
       res = RestClient.post "#{@url}/#{index_string}/_search?pretty=true&sort=#{sort}", \
       { \
         :query => { :query_string => { :query => "#{query_string}" }}, \
         :facets => { \
           :members => {:terms => {:field => "members"} }, \
-          :components => {:terms => {:field => "hansard_component"} } \
+          :components => {:terms => {:field => "hansard_component"} }, \
+          :indices => {:terms => {:field => "_index"} }
         }, \
         :fields => ["url", "members", "title", "hansard_ref", "date", "chair", "number", "hansard_component", "question_type"], \
         :highlight => { :fields => { :text => { :fragment_size => 150, :number_of_fragments => 3 } } }, \
@@ -43,7 +41,7 @@ module LHC
     def interpret_filter(filters)
       filter_terms = []
       filter = {}
-      filters = [filters] if filters.is_a?(String)
+      filters = [filters] if filters.is_a?(String) #failsafe
       filters.each do |filter_term|
         term, value = filter_term.split(":")
         term = "hansard_component" if term == "component"

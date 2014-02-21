@@ -56,12 +56,25 @@ def prev_link
   generate_link(-10)
 end
 
-def facet_link(facet)
+def facet_link(facet="")
+  unless facet.empty?
+    current_facets = params[:facet]
+    unless current_facets.nil?
+      facet_category = facet.split(":").first
+      current_facets = current_facets.split(",")
+      current_facets.each do |current_facet|
+        unless current_facet.split(":").first == facet_category
+          facet = "#{current_facet},#{facet}"
+        end
+      end
+    end
+  end
   generate_link(-1000, facet)
 end
 
 def generate_link(start_offset, facet=nil)
   start = params[:start].to_i + start_offset
+  
   link_parts = []
   params.each do |name, value|
     unless name == "start"

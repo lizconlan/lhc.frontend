@@ -1,0 +1,22 @@
+- if facets["components"]["terms"].count > 1
+  
+  %ul#facets
+    - component_facets = facets["components"]["terms"]
+    - index_facets = facets["indices"]["terms"]
+    - index_facets.delete_if { |x| x["count"] == 0 }
+    
+    - if params[:facet]
+      %li.facet-inactive
+        %a{:href => facet_link()} All Hansard content
+    - elsif index_facets.count > 1
+      - index_facets.each do |facet|
+        %li{:class => "facet-inactive"}
+          %a{:href => facet_link("index:#{facet["term"]}")}
+            =facet["term"].split("_").map { |x| x.capitalize }.join(" ")
+    
+    -unless index_facets.count > 1 and @index == "_all"
+      - component_facets.each do |facet|
+        - if facet["term"][0..1] =~ /[A-Z]/
+          %li{:class => @filters.include?("component:#{facet["term"]}") ? "facet-active" : "facet-inactive"}
+            %a{:href => facet_link("component:#{facet["term"]}")}
+              =facet["term"]
