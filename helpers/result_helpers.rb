@@ -1,5 +1,11 @@
-def hansard_part_link(house, date)
- "http://www.parliament.uk/business/publications/hansard/#{house.downcase()}/by-date/?d=#{date.day}&m=#{date.month}&y=#{date.year}"
+def hansard_part_link(index, date)
+  house = index.include?("commons") ? "commons" : "lords"
+  
+  if index.include?("historic")
+    "http://hansard.millbanksystems.com/#{house}/#{date.strftime("%Y/%b/%d").downcase}"
+  else
+    "http://www.parliament.uk/business/publications/hansard/#{house}/by-date/?d=#{date.day}&m=#{date.month}&y=#{date.year}"
+  end
 end
 
 def hansard_component_link(url)

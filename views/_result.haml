@@ -4,9 +4,8 @@
       = result["fields"]["title"][0]
   
   %span.breadcrumbs
-    - house = result["_index"].include?("commons") ? "Commons" : "Lords"
     - parse_date = Date.parse(result["fields"]["date"][0])
-    %a{:href => hansard_part_link(house, parse_date)}
+    %a{:href => hansard_part_link(result["_index"], parse_date)}
       =result["_index"].gsub("_", " ").split(/(\W)/).map(&:capitalize).join
       =parse_date.strftime("%e %b %Y")
     
