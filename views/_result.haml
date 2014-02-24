@@ -5,20 +5,24 @@
   
   %span.breadcrumbs
     - parse_date = Date.parse(result["fields"]["date"][0])
-    %a{:href => hansard_part_link(result["_index"], parse_date)}
+    %a{:href => hansard_part_link(result["_index"], parse_date, result["fields"]["url"][0])}
       =result["_index"].gsub("_", " ").split(/(\W)/).map(&:capitalize).join
       =parse_date.strftime("%e %b %Y")
     
     &rsaquo;
     
+    - component = result["fields"]["hansard_component"][0]
+    
     %a{:href => hansard_component_link(result["fields"]["url"][0])}
-      =result["fields"]["hansard_component"][0]
+      =component
   
   %span.citation
     =result["fields"]["hansard_ref"][0]
     - if result["fields"]["number"]
-      - if result["_type"] == "question"
+      - if component == "Written Answers" or component == "Debates and Oral Answers"
         = " - Question: #{result["fields"]["number"][0]}"
+      - if component == "Petitions"
+        = " - Petition: #{result["fields"]["number"][0]}"
     - if result["fields"]["chair"]
       = " - Chair: #{result["fields"]["chair"].join(" / ")}"
   
