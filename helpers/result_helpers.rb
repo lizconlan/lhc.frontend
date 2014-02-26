@@ -79,7 +79,7 @@ def facet_link(facet="")
   generate_link(-1000, facet)
 end
 
-def generate_link(start_offset, facet=nil)
+def generate_link(start_offset, facet=nil, sort=nil)
   start = params[:start].to_i + start_offset
   
   link_parts = []
@@ -94,6 +94,15 @@ def generate_link(start_offset, facet=nil)
   
   if facet and facet != ""
     link_parts << "facet=#{facet}"
+  end
+  
+  if sort
+    case sort
+    when "relevant"
+      link_parts << "sort=relevant"
+    when "recent"
+      link_parts << "sort=recent"
+    end
   end
   
   "?#{link_parts.join("&")}"

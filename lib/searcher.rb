@@ -13,8 +13,8 @@ module LHC
       end
     end
     
-    def search(query_string, index_string="_all", from=0, filters=[])
-      sort = "_score,date:desc"
+    def search(query_string, index_string="_all", from=0, filters=[], sort=nil)
+      sort = "_score,date:desc" if sort.nil? or sort.empty?
       filter = {:value => {}}
       filter = interpret_filter(filters)
       

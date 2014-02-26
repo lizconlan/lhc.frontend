@@ -23,6 +23,8 @@ module LHC
       @start = params[:start].to_i
       facet = params[:facet]
       facet = "" if facet.nil?
+      @sort = params[:sort]
+      @sort = "" if @sort.nil?
       
       @filters = facet.split(",")
       @index = "_all"
@@ -36,7 +38,14 @@ module LHC
         @filters.delete_if {|x| x.match(/^index\:/)}
       end
       
-      @results = @search.search(@query, @index, @start, @filters)
+      case @sort
+      when "relevant"
+        sort = "_score,date:desc"
+      when "recent"
+        sort = "date:desc,_score"
+      end
+      
+      @results = @search.search(@query, @index, @start, @filters, sort)
       @total = @results["hits"]["total"]
       
       haml :index

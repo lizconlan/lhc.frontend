@@ -12,6 +12,18 @@
     - else
       Showing #{@start+1} to #{@total >= @start+10 ? @start+10 : @total} of #{@total} results
       
+      %p
+        Sort by
+        - if @sort == "relevant"
+          %b Most relevant
+        -else
+          %a{:href => generate_link(-1000, nil, "relevant")} Most relevant
+        |
+        - if @sort == "recent"
+          %b Most recent
+        - else
+          %a{:href => generate_link(-1000, nil, "recent")} Most recent
+      
       - @results["hits"]["hits"].each do |result|
         =haml "_result".to_sym, :locals => {:result => result}
     - if @total > 10
