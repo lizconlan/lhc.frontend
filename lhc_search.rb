@@ -50,5 +50,9 @@ module LHC
       
       haml :index
     end
+    
+    get "/ua" do
+      request.user_agent
+    end
   end
 end

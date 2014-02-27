@@ -19,12 +19,15 @@ def hansard_component_link(url)
 end
 
 def prepare_contributors(members_array)
-  if members_array.size == 1
-    contributors_text = 'Contributor: '
-  else
-    contributors_text = 'Contributors: '
-  end
-      
+#   if members_array.size == 1
+#     contributors_text = 'Contributor: '
+#   else
+#     contributors_text = 'Contributors: '
+#   end
+  contributors_text = ""
+  
+  members_array.map! {|member| "<a href='http://data.parliament.uk/membersdataplatform/services/mnis/members/query/name*#{member}'>" + member + "</a>" }
+  
   if members_array.size > 3
     if members_array.size == 4
       contributors_text << members_array.join(', ') << ' and one other'

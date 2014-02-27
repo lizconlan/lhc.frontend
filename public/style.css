@@ -1,14 +1,14 @@
 body{width:40em;margin:4em auto;font-family:Helvetica,sans-serif}
 div.results{padding:0.9em 0}
 div.result{padding:0.9em 0 0.4em}
-div.result h2{font-size:1.2em;margin:0.2em 0}
+div.result span.title{font-size:1.2em;margin:0.2em 0}
 div.result span.breadcrumbs{display:block;color:green;padding-bottom:0.1em}
 div.result span.breadcrumbs a{color:green;text-decoration:none}
 div.result span.breadcrumbs a:hover{text-decoration:underline}
 div.result span.text{line-height:1.25em}
 div.result span.text em{font-weight:bold;font-style:normal}
-div.result span.citation{font-size:0.9em;display:block;color:gray;padding:0.1em 0}
-div.result span.contributors{font-size:0.9em;display:block;color:gray;padding:0.1em 0}
+div.result span.citation{display:block;color:#888;padding-top:0.4em}
+div.result span.contributors a{color:#888;padding:0.1em 0;text-decoration:none}
 ul#facets {padding-left:0}
 ul#facets li{list-style-type:none;text-indent:0}
 li.facet-active{border-left:4pt solid crimson;color:crimson;padding:0.5em 1em;}

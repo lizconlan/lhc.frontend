@@ -1,5 +1,5 @@
 .result
-  %h2.title
+  %span.title
     %a{:href => result["fields"]["url"]}
       = result["fields"]["title"]
   
@@ -15,20 +15,22 @@
     
     %a{:href => hansard_component_link(result["fields"]["url"])}
       =component
-  
+      
+  - if result["fields"]["members"] and result["_type"] != "division"
+    %span.contributors
+      = prepare_contributors(result["fields"]["members"])
+      
+  - if result["highlight"]
+    %span.text
+      =format_highlights(result["highlight"]["text"])
+      
   %span.citation
     =result["fields"]["hansard_ref"]
     - if result["fields"]["number"]
       - if component == "Written Answers" or component == "Debates and Oral Answers"
-        = " - Question: #{result["fields"]["number"]}"
+        = " - Question #{result["fields"]["number"]}"
       - if component == "Petitions"
-        = " - Petition: #{result["fields"]["number"]}"
+        = " - Petition #{result["fields"]["number"]}"
     - if result["fields"]["chair"]
-      = " - Chair: #{result["fields"]["chair"].join(" / ")}"
+      = " - Chair. #{result["fields"]["chair"].join(" / ")}"
   
-  - if result["highlight"]
-    %span.text
-      =format_highlights(result["highlight"]["text"])
-  - if result["fields"]["members"] and result["_type"] != "division"
-    %span.contributors
-      = prepare_contributors(result["fields"]["members"])
