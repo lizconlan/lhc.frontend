@@ -1,19 +1,19 @@
 .result
   %span.title
-    %a{:href => result["fields"]["url"]}
-      = result["fields"]["title"]
+    %a{:href => result["fields"]["url"].first}
+      = result["fields"]["title"].first
   
   %span.breadcrumbs
-    - parse_date = Date.parse(result["fields"]["date"])
-    %a{:href => hansard_part_link(result["_index"], parse_date, result["fields"]["url"])}
+    - parse_date = Date.parse(result["fields"]["date"].first)
+    %a{:href => hansard_part_link(result["_index"], parse_date, result["fields"]["url"].first)}
       =result["_index"].gsub("_", " ").split(/(\W)/).map(&:capitalize).join
       =parse_date.strftime("%e %b %Y")
     
     &rsaquo;
     
-    - component = result["fields"]["hansard_component"]
+    - component = result["fields"]["hansard_component"].first
     
-    %a{:href => hansard_component_link(result["fields"]["url"])}
+    %a{:href => hansard_component_link(result["fields"]["url"].first)}
       =component
       
   - if result["fields"]["members"] and result["_type"] != "division"
@@ -25,12 +25,12 @@
       =format_highlights(result["highlight"]["text"])
       
   %span.citation
-    =result["fields"]["hansard_ref"]
+    =result["fields"]["hansard_ref"].first
     - if result["fields"]["number"]
       - if component == "Written Answers" or component == "Debates and Oral Answers"
-        = " - Question #{result["fields"]["number"]}"
+        = " - Question #{result["fields"]["number"].first}"
       - if component == "Petitions"
-        = " - Petition #{result["fields"]["number"]}"
+        = " - Petition #{result["fields"]["number"].first}"
     - if result["fields"]["chair"]
       = " - Chair. #{result["fields"]["chair"].join(" / ")}"
   
