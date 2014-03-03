@@ -100,11 +100,14 @@ def generate_link(start_offset, facet=nil, sort=nil)
   end
   
   if sort
+    link_parts.delete_if { |x| x =~ /^sort=/}
     case sort
     when "relevant"
       link_parts << "sort=relevant"
     when "recent"
       link_parts << "sort=recent"
+    when "earliest"
+      link_parts << "sort=earliest"
     end
   end
   

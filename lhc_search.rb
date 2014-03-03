@@ -42,7 +42,9 @@ module LHC
       when "relevant"
         sort = "_score,date:desc"
       when "recent"
-        sort = "date:desc,_score"
+        sort = "date:desc"
+      when "earliest"
+        sort = "date"
       end
       
       @results = @search.search(@query, @index, @start, @filters, sort)

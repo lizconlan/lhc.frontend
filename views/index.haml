@@ -13,17 +13,21 @@
       Showing #{@start+1} to #{@total >= @start+10 ? @start+10 : @total} of #{@total} results
       
       %p
-        Sort by
-        - if @sort == "relevant"
-          %b Most relevant
-        -else
-          %a{:href => generate_link(-1000, nil, "relevant")} Most relevant
-        |
         - if @sort == "recent"
-          %b Most recent
+          %b Sort by MOST RECENT
         - else
-          %a{:href => generate_link(-1000, nil, "recent")} Most recent
-      
+          %a{:href => generate_link(-1000, nil, "recent")} Sort by MOST RECENT
+        |
+        - if @sort == "earliest"
+          %b Sort by EARLIEST
+        - else
+          %a{:href => generate_link(-1000, nil, "earliest")} Sort by EARLIEST
+        |
+        - if @sort == "relevant" or @sort.empty?
+          %b Sort by MOST RELEVANT
+        -else
+          %a{:href => generate_link(-1000, nil, "relevant")} Sort by MOST RELEVANT
+          
       - @results["hits"]["hits"].each do |result|
         =haml "_result".to_sym, :locals => {:result => result}
     - if @total > 10
