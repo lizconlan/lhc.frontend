@@ -7,16 +7,18 @@
     
     - if params[:facet]
       %li.facet-inactive
-        %a{:href => facet_link()} All Hansard content
+        %a{href: facet_link()} 
+          All content
+          
     - elsif index_facets.count > 1
       - index_facets.each do |facet|
-        %li{:class => "facet-inactive"}
+        %li.facet-inactive
           %a{:href => facet_link("index:#{facet["term"]}")}
             =facet["term"].split("_").map { |x| x.capitalize }.join(" ")
     
     -unless index_facets.count > 1 and @index == "_all"
       - component_facets.each do |facet|
         - if facet["term"][0..1] =~ /[A-Z]/
-          %li{:class => @filters.include?("component:#{facet["term"]}") ? "facet-active" : "facet-inactive"}
-            %a{:href => facet_link("component:#{facet["term"]}")}
+          %li{class: @filters.include?("component:#{facet["term"]}") ? "facet-active" : "facet-inactive"}
+            %a{href: facet_link("component:#{facet["term"]}")}
               =facet["term"]

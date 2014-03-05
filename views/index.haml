@@ -1,32 +1,37 @@
 
-    
 - if @query 
-  =haml "_facets".to_sym, :locals => {:facets => @results["facets"]}
+  =haml "_facets".to_sym, locals: {facets: @results["facets"]}
   
-  %div.results
-    - if @total < 1
+  - if @total < 1
+    %p
       No results found
-    - else
-      Showing #{@start+1} to #{@total >= @start+10 ? @start+10 : @total} of #{@total} results
       
-      %p
-        - if @sort == "recent"
-          %b Sort by MOST RECENT
-        - else
-          %a{:href => generate_link(-1000, nil, "recent")} Sort by MOST RECENT
-        |
-        - if @sort == "earliest"
-          %b Sort by EARLIEST
-        - else
-          %a{:href => generate_link(-1000, nil, "earliest")} Sort by EARLIEST
-        |
-        - if @sort == "relevant" or @sort.empty?
-          %b Sort by MOST RELEVANT
-        -else
-          %a{:href => generate_link(-1000, nil, "relevant")} Sort by MOST RELEVANT
-          
+  - else
+    
+    %p
+      - if @sort == "recent"
+        %b Sort by MOST RECENT
+      - else
+        %a{:href => generate_link(-1000, nil, "recent")} Sort by MOST RECENT
+      |
+      - if @sort == "earliest"
+        %b Sort by EARLIEST
+      - else
+        %a{:href => generate_link(-1000, nil, "earliest")} Sort by EARLIEST
+      |
+      - if @sort == "relevant" or @sort.empty?
+        %b Sort by MOST RELEVANT
+      -else
+        %a{:href => generate_link(-1000, nil, "relevant")} Sort by MOST RELEVANT
+        
+    %p
+      %small
+        #{@start+1} - #{@total >= @start+10 ? @start+10 : @total} of #{@total} results
+      
+    #results
       - @results["hits"]["hits"].each do |result|
         =haml "_result".to_sym, :locals => {:result => result}
+        
     - if @total > 10
       =haml "_pagination".to_sym
       
