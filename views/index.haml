@@ -1,7 +1,4 @@
-%form#search{:action=>'/', :method=>'get'}
-  %div{:data => {:role=>'fieldcontain'}}
-    %label{:for=>"search"} Search
-    %input{:name => 'q', :id => 'search', :value => @query, :placeholder=>"Search"}
+
     
 - if @query 
   =haml "_facets".to_sym, :locals => {:facets => @results["facets"]}

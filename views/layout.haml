@@ -4,7 +4,10 @@
     %meta{charset: "utf-8"}
     %title Hansard Search
     %meta{name: "viewport", content: "width=device-width, initial-scale=1.0"}
-    %link{rel: "stylesheet", href: "/style.css"}
+    %link{rel: "stylesheet", href: "style.css"}
   %body
+    %form{action: '/', method: 'get'}
+      %input{name: 'q', id: 'search', value: @query, placeholder: "Search"}
+      %input{type: "submit", value: "Search"}
     =yield
     
