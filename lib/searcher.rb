@@ -13,22 +13,28 @@ module LHC
       end
     end
     
-    def search(query_string, index_string="_all", from=0, filters=[], sort=nil)
+    def search(query_string, index_string="_all", from=0, filters=[], sort=nil, resolution="")
       sort = "_score,date:desc" if sort.nil? or sort.empty?
       filter = {:value => {}}
       filter = interpret_filter(filters)
       
-      res = RestClient.post "#{@url}/#{index_string}/_search?pretty=true&sort=#{sort}", \
-      { \
-        :query => { :query_string => { :query => "#{query_string}" }}, \
-        :facets => { \
-          :members => {:terms => {:field => "members"} }, \
-          :components => {:terms => {:field => "hansard_component"} }, \
-          :indices => {:terms => {:field => "_index"} }
-        }, \
-        :fields => ["url", "members", "title", "hansard_ref", "date", "chair", "number", "hansard_component", "question_type"], \
-        :highlight => { :fields => { :text => { :fragment_size => 150, :number_of_fragments => 3 } } }, \
-        :filter => filter[:value], \
+      res = RestClient.post "#{@url}/#{index_string}/_search?pretty=true&sort=#{sort}",
+      {
+        :query => { :query_string => { :query => "#{query_string}" }},
+        :facets => {
+          :members => {:terms => {:field => "members"} },
+          :components => {:terms => {:field => "hansard_component"} },
+          :indices => {:terms => {:field => "_index"} },
+          :histogram =>  {
+            :date_histogram => {
+              :field => "date",
+              :interval => "year"
+            }
+          }
+        },
+        :fields => ["url", "members", "title", "hansard_ref", "date", "chair", "number", "hansard_component", "question_type"],
+        :highlight => { :fields => { :text => { :fragment_size => 150, :number_of_fragments => 3 } } },
+        :filter => filter[:value],
         :from => from
       }.to_json, :content_type => :json
       
