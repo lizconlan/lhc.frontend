@@ -18,7 +18,7 @@ def hansard_component_link(url)
   [url_parts[0..url_parts.length-2].join('/'),section_end].join('/')
 end
 
-def prepare_contributors(members_array)
+def prepare_contributors(members_array, index_name="")
 #   if members_array.size == 1
 #     contributors_text = 'Contributor: '
 #   else
@@ -26,16 +26,25 @@ def prepare_contributors(members_array)
 #   end
   contributors_text = ""
   
-  members_array.map! {|member| "<a href='http://data.parliament.uk/membersdataplatform/services/mnis/members/query/name*#{member}'>" + member + "</a>" }
+  members = []
+  members_array.each_with_index do |member, position|
+    break if position > 4
+    case index_name
+    when /commons_/
+      members << "<a href='http://data.parliament.uk/membersdataplatform/services/mnis/members/query/name*#{member}'>" + member + "</a>"
+    when "lords_hansard"
+      members << "<a href='http://data.parliament.uk/membersdataplatform/services/mnis/members/query/title*#{member.gsub("'", "%27")}'>" + member + "</a>"
+    end
+  end
   
   if members_array.size > 3
     if members_array.size == 4
-      contributors_text << members_array.join(', ') << ' and one other'
+      contributors_text << members.join(', ') << ' and one other'
     else
-      contributors_text << members_array[0,3].join(', ') << ' and ' << (members_array.size - 3).to_s << ' others'
+      contributors_text << members[0,3].join(', ') << ' and ' << (members_array.size - 3).to_s << ' others'
     end
   else
-    contributors_text << members_array.join(', ') 
+    contributors_text << members.join(', ') 
   end
   contributors_text
 end

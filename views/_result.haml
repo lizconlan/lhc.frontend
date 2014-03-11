@@ -18,7 +18,7 @@
           =component
         %cite
           - if result["fields"]["members"] and result["_type"] != "division"
-            = prepare_contributors(result["fields"]["members"])
+            = prepare_contributors(result["fields"]["members"], result["_index"])
     
   %span.citation
     =result["fields"]["hansard_ref"].first
