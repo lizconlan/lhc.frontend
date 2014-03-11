@@ -22,3 +22,9 @@
           %li{class: @filters.include?("component:#{facet["term"]}") ? "facet-active" : "facet-inactive"}
             %a{href: facet_link("component:#{facet["term"]}")}
               =facet["term"]
+- else
+  - if params[:facet] #a facet is chosen but there are no other options
+    %ul#facets
+      %li.facet-inactive
+        %a{href: facet_link()}
+          All content
